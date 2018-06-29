@@ -90,7 +90,7 @@ resource "local_file" "kubeconfig" {
 }
 
 resource "aws_cloudformation_stack" "eks-nodegroup" {
-  name = "${var.nodegroup-name}"
+  name = "${format("%s-%s", var.cluster-name,var.nodegroup-name)}"
   capabilities = ["CAPABILITY_IAM"]
   parameters {
     KeyName = "${var.key-name}",
@@ -98,11 +98,12 @@ resource "aws_cloudformation_stack" "eks-nodegroup" {
     ClusterName = "${var.cluster-name}",
     VpcId = "${aws_cloudformation_stack.eks-vpc.outputs["VpcId"]}",
     Subnets = "${aws_cloudformation_stack.eks-vpc.outputs["SubnetIds"]}",
-    NodeGroupName = "worker-nodes",
+    NodeGroupName = "spot-worker",
     ClusterControlPlaneSecurityGroup = "${aws_cloudformation_stack.eks-vpc.outputs["SecurityGroups"]}",
     
-}
+  }
   template_body = "${file(var.nodegroup-file)}"
+  depends_on = ["aws_eks_cluster.master-cluster"]
 }
 
 locals {
