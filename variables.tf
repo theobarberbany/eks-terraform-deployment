@@ -19,7 +19,7 @@ variable "key-name" {
 }
 
 variable "nodegroup-name" {
-        default = "eks-workernode-group"
+        default = "worker-nodes" 
 }
 
 variable "amis" {
