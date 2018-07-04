@@ -22,6 +22,18 @@ variable "nodegroup-name" {
         default = "worker-nodes" 
 }
 
+variable "node-instance-type" {
+        default = "m4.xlarge"
+}
+
+variable "desired-node-size" {
+        default = 1
+}
+
+variable "max-spot-bid" {
+        default = 0.1
+}
+
 variable "amis" {
         type = "map"
         default = {

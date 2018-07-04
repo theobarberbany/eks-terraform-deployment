@@ -99,6 +99,9 @@ resource "aws_cloudformation_stack" "eks-nodegroup" {
     VpcId = "${aws_cloudformation_stack.eks-vpc.outputs["VpcId"]}",
     Subnets = "${aws_cloudformation_stack.eks-vpc.outputs["SubnetIds"]}",
     NodeGroupName = "spot-worker",
+    DesiredNodeSize = "${var.desired-node-size}",
+    NodeInstanceType = "${var.node-instance-type}",
+    MaxSpotBid = "${var.max-spot-bid}",
     ClusterControlPlaneSecurityGroup = "${aws_cloudformation_stack.eks-vpc.outputs["SecurityGroups"]}",
     
   }
